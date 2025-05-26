@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Additional Courses - CollegeGuide</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-container {
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 15px 40px;
+        }
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+        .logo-highlight {
+            color: #43a047;
+        }
+        .nav-links a {
+            margin-left: 20px;
+            color: #388e3c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
+        .courses-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .section-heading {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(67, 160, 71, 0.1);
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(67, 160, 71, 0.1);
+        }
+        .course-card h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        .course-card p {
+            color: #4a5568;
+            margin: 10px 0;
+        }
+        .course-card .offered-by {
+            font-style: italic;
+            color: #718096;
+        }
+        .enroll-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #43a047;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        .enroll-link:hover {
+            background: #388e3c;
+        }
+        .no-courses {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .error-message {
+            text-align: center;
+            color: #e53935;
+            padding: 20px;
+            background: #ffebee;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-content {
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .nav-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="logo">
+                <span>College</span><span class="logo-highlight">Guide</span>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="courses-container">
+        <h1 class="section-heading">Additional Courses</h1>
+        
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        {% if courses %}
+        <div class="course-grid">
+            {% for course in courses %}
+            <div class="course-card">
+                <h3>{{ course.course_name }}</h3>
+                <p><strong>Description:</strong> {{ course.description }}</p>
+                <p class="offered-by"><strong>Offered by:</strong> {{ course.offered_by }}</p>
+                <a href="{{ course.registration_link }}" class="enroll-link" target="_blank">
+                    Enroll Now
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-courses">
+            <p>No additional courses available at the moment.</p>
+            <p>Please check back later for new opportunities.</p>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Study Materials</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .result-box {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .no-results {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .suggestions {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .download-link {
+            color: #3498db;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .download-link:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h2>📘 View Study Materials</h2>
+    <form action="/materials" method="post">
+        <label for="subject_name">Enter Subject Name:</label>
+        <input type="text" name="subject_name" id="subject_name" 
+               value="{{ searched_subject if searched_subject else '' }}"
+               required>
+        <button type="submit">Get Materials</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if suggestions %}
+    <div class="suggestions">
+        <p>No materials found for "{{ searched_subject }}". Did you mean:</p>
+        <ul>
+        {% for sub in suggestions %}
+            <li>
+                <form action="/materials" method="post" style="display: inline;">
+                    <input type="hidden" name="subject_name" value="{{ sub.subject_name }}">
+                    <button type="submit" class="btn-link">{{ sub.subject_name }}</button>
+                </form>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if results %}
+    <div class="results">
+        <h3>Materials for "{{ searched_subject }}"</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Type</th>
+                    <th>Original Filename</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for material in results %}
+                <tr>
+                    <td>{{ material.subject_name }}</td>
+                    <td>{{ material.material_type }}</td>
+                    <td>{{ material.file_name }}</td>
+                    <td>
+                        <a href="{{ url_for('download_file', filename=material.material_link) }}"
+                           class="btn btn-primary btn-sm">
+                           Download
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% elif request.method == 'POST' and not suggestions %}
+    <p class="no-results">No materials found for "{{ searched_subject }}"</p>
+    {% endif %}
+</div>
+</body>
+</html>

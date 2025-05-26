@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Timetable</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #eef2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-container {
+            background: #ffffff;
+            padding: 15px 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo-highlight {
+            color: #007bff;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 6px solid #007bff;
+            border-radius: 8px;
+        }
+
+        .result p {
+            margin: 8px 0;
+            color: #333;
+        }
+
+        .no-result {
+            margin-top: 30px;
+            color: red;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+            }
+
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="logo">
+                <span>College</span><span class="logo-highlight">Guide</span>
+            </div>
+            <div class="nav-links">
+                <a onclick="location.href='/'">Home</a>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Exam Timetable</h2>
+        <form method="POST">
+            <label for="semester">Select Semester:</label>
+            <select name="semester" id="semester" onchange="this.form.submit()" required>
+                <option value="">-- Choose Semester --</option>
+                {% for s in semesters %}
+                    <option value="{{ s.semester }}" {% if semester_selected == s.semester %}selected{% endif %}>{{ s.semester }}</option>
+                {% endfor %}
+            </select>
+
+            {% if semester_selected %}
+                <label for="subject_name">Select Subject:</label>
+                <select name="subject_name" id="subject_name" required>
+                    <option value="">-- Choose Subject --</option>
+                    {% for sub in subjects %}
+                        <option value="{{ sub.subject_name }}">{{ sub.subject_name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Show Timetable</button>
+            {% endif %}
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <p><strong>Subject:</strong> {{ result.subject_name }}</p>
+            <p><strong>Date:</strong> {{ result.exam_date }}</p>
+            <p><strong>Time:</strong> {{ result.exam_time }}</p>
+            <p><strong>Location:</strong> {{ result.location }}</p>
+        </div>
+        {% elif request.method == 'POST' and not result %}
+        <p class="no-result">No exam found for selected subject.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

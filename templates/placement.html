@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Placement Information</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .placement-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .placement-card {
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .company-name {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+        .placement-date {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .placement-details {
+            margin: 15px 0;
+        }
+        .eligibility {
+            background: #e8f4fc;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .register-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .register-btn:hover {
+            background: #2980b9;
+        }
+        .past-placement {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .past-placement:last-child {
+            border-bottom: none;
+        }
+        .no-placements {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 30px;
+        }
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+            background: #fdecea;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏢 Placement Information</h1>
+        
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <div class="placement-section">
+            <h2>💼 Available Placements</h2>
+            
+            {% if companies %}
+                {% for company in companies %}
+                <div class="placement-card">
+                    <div class="company-name">{{ company.company_name }}</div>
+
+                    <div class="placement-details">
+                        <strong>Role:</strong> {{ company.job_role }}<br>
+                        <div class="eligibility">
+                            <strong>Eligibility:</strong> {{ company.eligibility_criteria }}
+                        </div>
+                    </div>
+                    
+                    <a href="{{ company.registration_link }}" class="register-btn" target="_blank">
+                        Register Now
+                    </a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-placements">
+                    <p>No placement data available.</p>
+                    <p>Please check back later for updates.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

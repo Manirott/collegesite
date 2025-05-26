@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Guide Robot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <div class="logo">
+                <span>College</span><span class="logo-highlight">Guide</span>
+            </div>
+            <div class="nav-links">
+                <h1>Hello {{ username }}!</h1>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                 <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Your Smart <span class="hero-highlight">College Assistant</span></h1>
+            <p>Navigate campus life effortlessly with AI-powered guidance</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">Get Started</button>
+                <button class="btn-secondary">Watch Demo</button>
+            </div>
+            <img src="https://img.freepik.com/free-vector/hand-drawn-flat-design-robot-illustration_23-2149315738.jpg" alt="Robot Assistant" class="hero-image">
+        </div>
+    </section>            
+                <!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="section-content">
+        <h2>Smart Features for <span class="highlight">Student Success</span></h2>
+        <div class="features-grid">
+            <!-- Syllabus -->
+           <a href="/syllabus" class="feature-link">
+              <div class="feature-card">
+                <div class="feature-icon">📘</div>
+                <h3>Syllabus</h3>
+                <p>Access course outlines and curriculum details</p>
+              </div>
+            </a>
+
+
+            <!-- Exam Timetable -->
+             <a href="/timetable" class="feature-link">
+            <div class="feature-card">
+                <div class="feature-icon">🕒</div>
+                <h3>Exam Schedule</h3>
+                <p>Check your examination dates and times</p>
+            </div>
+            </a>
+
+            <!-- Study Materials -->
+             <a href="/materials" class="feature-link">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Study Materials</h3>
+                <p>Access lecture notes and reference documents</p>
+            </div>
+            </a>
+
+            <!-- Placements -->
+             <a href="/placement" class="feature-link">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Placements</h3>
+                <p>Company information and interview preparation</p>
+            </div>
+            </a>
+
+            <!-- Events -->
+            <div class="feature-card">
+                <div class="feature-icon">🎉</div>
+                <h3>Campus Events</h3>
+                <p>Stay updated on workshops and activities</p>
+            </div>
+
+            <!-- Navigation -->
+            <a href="/navigation" class="feature-link">
+    <div class="feature-card">
+        <div class="feature-icon">🧭</div>
+        <h3>Campus Navigation</h3>
+        <p>Interactive maps and location finder</p>
+    </div>
+</a>      
+
+
+            <!-- Add-on Courses -->
+            <a href="/courses" class="feature-link">
+  <div class="feature-card">
+    <div class="feature-icon">🚀</div>
+    <h3>Add-on Courses</h3>
+    <p>Skill development certifications</p>
+  </div>
+</a>
+
+
+            <!-- Seat Allocation -->
+              <a href="/seat" class="feature-link">
+                 <div class="feature-card">
+                <div class="feature-icon">💺</div>
+                <h3>Seat Allocation</h3>
+                <p>Find your exam seat quickly</p>
+                </div>
+                </a>
+        </div>
+    </div>
+</section>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="section-content">
+            <div class="about-content">
+                <img src="{{ url_for('static', filename='download.jpg') }}" alt="St" class="about-image">
+
+                <div class="about-text">
+                    <h2>About <span class="highlight">CollegeGuide</span></h2>
+                    <p>AI-powered assistant designed to simplify campus life</p>
+                    <ul class="benefits-list">
+                        <li>📚 Instant academic resources</li>
+                        <li>🗺️ Campus navigation</li>
+                        <li>🔔 Real-time updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <span>College</span><span class="logo-highlight">Guide</span>
+                </div>
+                <p>Your smart campus companion</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-group">
+                    <h4>Quick Links</h4>
+                    <a href="#features">Features</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="link-group">
+                    <h4>Contact</h4>
+                    <p>https://www.kgisliim.ac.in/</p>
+                    <p>90952 22222</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 CollegeGuide. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <df-messenger
+        intent="WELCOME"
+        chat-title="CollegeGuide"
+        agent-id="862dccc4-c7de-4c22-912f-ca7b2adb10bb"
+        language-code="en">
+    </df-messenger>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: flask-mysql-app
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: DB_HOST
+        value: sql12.freesqldatabase.com
+      - key: DB_USER
+        value: sql12781221
+      - key: DB_PASSWORD
+        value: P9GbCULkhq
+      - key: DB_NAME
+        value: sql12781221
